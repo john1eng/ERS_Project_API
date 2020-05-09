@@ -2,13 +2,22 @@
   "name": "project_1_api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./build/index.js",
+    "dev-start": "tsc && node ./build/index.js",
+    "test": "jest --no-cache",
+    "coverage": "jest --coverage --no-cache",
+    "watch-tests": "jest --watch --no-cache",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1",
+    "typescript": "^3.8.3"
   }
 }

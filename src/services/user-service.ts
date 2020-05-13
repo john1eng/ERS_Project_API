@@ -17,7 +17,6 @@ export class UserService {
     }
 
     async getAllUsers(): Promise<User[]> {
-        console.log("im in the service");
         let users = await this.userRepo.getAll();
         console.log("back to service", users)
         if (users.length == 0) {
@@ -110,7 +109,6 @@ export class UserService {
     async addNewUser(newUser: User): Promise<User> {
         
         try {
-
             if (!isValidObject(newUser, 'ERS_USER_ID')) {
                 throw new BadRequestError('Invalid property values found in provided user.');
             }
@@ -138,6 +136,7 @@ export class UserService {
     }
 
     async updateUser(updatedUser: User): Promise<boolean> {
+        console.log("im in the service");
         
         try {
 

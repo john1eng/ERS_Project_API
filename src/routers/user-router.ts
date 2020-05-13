@@ -11,7 +11,6 @@ const userService = AppConfig.userService;
 UserRouter.get('', async (req, resp) =>{
 
     try{
-        console.log("Im in the router.")
         let reqURL = url.parse(req.url, true);
         //what is ParsedURLQUERY for
         if(!isEmptyObject<ParsedUrlQuery>(reqURL.query)){
@@ -24,4 +23,51 @@ UserRouter.get('', async (req, resp) =>{
     } catch (e) {
         resp.status(e.statusCode).json(e);
     }
+});
+
+UserRouter.get('/:id', async (req, resp) => {
+    const id = +req.params.id;
+    try {
+        let payload = await userService.getUserById(id);
+        return resp.status(200).json(payload);
+    } catch (e) {
+        return resp.status(e.statusCode).json(e);
+    }
+});
+
+UserRouter.post('', async (req, resp) => {
+    console.log('POST REQUEST RECEIVED AT /users');
+    console.log(req.body);
+    try {
+        let newUser = await userService.addNewUser(req.body);
+        return resp.status(201).json(newUser);
+    } catch (e) {
+        return resp.status(e.statusCode).json(e);
+    }
+
+});
+
+UserRouter.patch('', async (req, resp) => {
+
+	console.log('PATCH REQUEST RECEIVED AT /users');
+	try {
+		let updUser = await userService.updateUser(req.body);
+		return resp.status(200).json(updUser);
+	} catch (e) {
+		return resp.status(e.statusCode).json(e);
+	}
+
+});
+
+UserRouter.delete('', async (req, resp) => {
+    console.log("Im in the router.")
+
+	console.log('DELETE REQUEST RECEIVED AT /users');
+	try {
+		let delUser = await userService.deleteById(req.body.ERS_USER_ID);
+		return resp.status(204).json(delUser);
+	} catch (e) {
+		return resp.status(e.statusCode).json(e);
+	}
+
 });

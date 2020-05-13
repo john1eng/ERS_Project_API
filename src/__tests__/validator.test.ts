@@ -111,7 +111,7 @@ describe('validator', () => {
         expect.hasAssertions();
 
         // Act
-        let result1 = isValidObject(new User(1, 'username', 'password', 'first', 'last', 'email', 1));
+        let result1 = isValidObject(new User(1, 'username', 'password', 'first', 'last', 'email', 'admin'));
 
         // Assert
         expect(result1).toBe(true);
@@ -124,7 +124,7 @@ describe('validator', () => {
         expect.hasAssertions();
 
         // Act
-        let result1 = isValidObject(new User(0, 'username', 'password', 'first', 'last', 'email', 1), 'ERS_USER_ID');
+        let result1 = isValidObject(new User(0, 'username', 'password', 'first', 'last', 'email', 'admin'), 'ERS_USER_ID');
 
         // Assert
         expect(result1).toBe(true);
@@ -137,7 +137,7 @@ describe('validator', () => {
         expect.hasAssertions();
 
         // Act
-        let result1 = isValidObject(new User(1, 'username', 'password', '', 'last', 'email', 1));
+        let result1 = isValidObject(new User(1, 'username', 'password', '', 'last', 'email', 'admin'));
 
         // Assert
         expect(result1).toBe(false);
@@ -150,7 +150,7 @@ describe('validator', () => {
         expect.hasAssertions();
 
         // Act
-        let result1 = isValidObject(new User(1, 'username', 'password', '', 'last', 'email', 1), 'id');
+        let result1 = isValidObject(new User(1, 'username', 'password', '', 'last', 'email', 'admin'), 'id');
 
         // Assert
         expect(result1).toBe(false);

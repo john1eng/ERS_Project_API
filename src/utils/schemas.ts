@@ -5,5 +5,5 @@ export interface UserSchema {
     first_name: string,
     last_name: string,
     email: string,
-    user_role_id: number
+    role_name: string
 }

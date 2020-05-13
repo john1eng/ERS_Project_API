@@ -27,7 +27,6 @@ export class UserRepository implements CrudRepository<User> {
 `   ;
     
     async getAll(): Promise<User[]> {
-        console.log('im in the repo');
         let client: PoolClient;
 
         try {
@@ -99,21 +98,19 @@ export class UserRepository implements CrudRepository<User> {
     }
 
     async save(newUser: User): Promise<User> {
-            
         let client: PoolClient;
 
         try {
             client = await connectionPool.connect();
 
             // WIP: hacky fix since we need to make two DB calls
-            // let roleId = (await client.query('select ROLE_ID from USER_ROLES where ROLE_NAME = $1', [newUser.ROLE_ID])).rows[0].id;
-            
+            let roleId = (await client.query('select ROLE_ID from ERS_USER_ROLES where ROLE_NAME = $1', [newUser.ROLE_NAME])).rows[0].role_id;
             let sql = `
                 insert into ERS_USERS (username,password,first_name,last_name,email,user_role_id) 
                 values ($1, $2, $3, $4, $5, $6) returning ERS_USER_ID
             `;
 
-            let rs = await client.query(sql, [newUser.USERNAME, newUser.PASSWORD, newUser.FIRST_NAME, newUser.LAST_NAME, newUser.EMAIL, newUser.USER_ROLE_ID]);
+            let rs = await client.query(sql, [newUser.USERNAME, newUser.PASSWORD, newUser.FIRST_NAME, newUser.LAST_NAME, newUser.EMAIL, +roleId]);
             
             newUser.ERS_USER_ID = rs.rows[0].ERS_USER_ID;
             
@@ -129,14 +126,20 @@ export class UserRepository implements CrudRepository<User> {
     }
 
     async update(updatedUser: User): Promise<boolean> {
-        
+        console.log('im in the repo');   
+
         let client: PoolClient;
 
         try {
             client = await connectionPool.connect();
+
+            //get the role_id with role name then to update with the info
+            let roleId = (await client.query('select ROLE_ID from ERS_USER_ROLES where ROLE_NAME = $1', [updatedUser.ROLE_NAME])).rows[0].role_id;
+            console.log(roleId);
             let sql = `update ERS_USERS 
-                    set username = '${updatedUser.USERNAME}', password = '${updatedUser.PASSWORD}', first_name = '${updatedUser.FIRST_NAME}', last_name = '${updatedUser.LAST_NAME}' ,email = '${updatedUser.EMAIL}', user_role_id = '${updatedUser.USER_ROLE_ID}
+                    set username = '${updatedUser.USERNAME}', password = '${updatedUser.PASSWORD}', first_name = '${updatedUser.FIRST_NAME}', last_name = '${updatedUser.LAST_NAME}', email = '${updatedUser.EMAIL}', user_role_id = '${roleId}'
                     where ERS_USER_ID =$1`;
+            console.log(sql)
             let rs = await client.query(sql, [updatedUser.ERS_USER_ID]);
             return true;
         } catch (e) {

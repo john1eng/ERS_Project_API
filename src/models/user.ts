@@ -5,15 +5,15 @@ export class User{
     FIRST_NAME: string;
     LAST_NAME: string;
     EMAIL: string
-    USER_ROLE_ID: number;
+    ROLE_NAME: string;
 
-    constructor(id: number, un: string, pw: string, fn: string, ln: string, em: string, role: number){
+    constructor(id: number, un: string, pw: string, fn: string, ln: string, em: string, role: string){
         this.ERS_USER_ID = id;
         this.USERNAME = un;
         this.PASSWORD = pw;
         this.FIRST_NAME = fn;
         this.LAST_NAME = ln;
         this.EMAIL = em;
-        this.USER_ROLE_ID = role;
+        this.ROLE_NAME = role;
     }
 }

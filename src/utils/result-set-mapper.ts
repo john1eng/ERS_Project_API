@@ -34,8 +34,12 @@ export function mapReimbResultSet(resultSet: ReimbSchema): Reimb {
         resultSet.resolved,
         resultSet.description,
         resultSet.receipt,
-        resultSet.author,
-        resultSet.resolver,
+        resultSet.author_username,
+        resultSet.author_first_name,
+        resultSet.author_last_name,
+        resultSet.resolver_username,
+        resultSet.resolver_first_name,
+        resultSet.resolver_last_name,
         resultSet.reimb_status,
         resultSet.reimb_type
     );

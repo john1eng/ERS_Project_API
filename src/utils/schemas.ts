@@ -15,8 +15,12 @@ export interface ReimbSchema {
     resolved: Date,
     description: string,
     receipt: string,
-    author:string,
-    resolver: string,
+    author_username:string,
+    author_first_name: string,
+    author_last_name: string,
+    resolver_username: string,
+    resolver_first_name: string,
+    resolver_last_name: string,
     reimb_status: string,
     reimb_type: string
 }

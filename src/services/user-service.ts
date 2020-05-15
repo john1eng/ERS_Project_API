@@ -109,6 +109,8 @@ export class UserService {
     async addNewUser(newUser: User): Promise<User> {
         
         try {
+            console.log('im in addnewuser service')
+            console.log(newUser)
             if (!isValidObject(newUser, 'ERS_USER_ID')) {
                 throw new BadRequestError('Invalid property values found in provided user.');
             }

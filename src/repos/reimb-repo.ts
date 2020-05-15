@@ -20,23 +20,23 @@ export class ReimbRepository implements CrudRepository<Reimb> {
     re.RESOLVED,
     re.DESCRIPTION,
     re.RECEIPT,
-    us.username,
-    us.first_name,
-    us.last_name,
+    us.username as author_username,
+    us.first_name as author_first_name,
+    us.last_name as author_last_name,
     st.reimb_status,
-    rs.username,
-    rs.first_name,
-    rs.last_name,
+    rs.username as resolver_username,
+    rs.first_name as resolver_first_name,
+    rs.last_name as resolver_last_name,
     ty.reimb_type 
     from ers_reimbursement re
-    join ERS_USERS us
+    left join ERS_USERS us
     on re.AUTHOR_ID = us.ers_user_id
-    join ers_reimbursement_statuses st
+    left join ers_reimbursement_statuses st
     on re.reimb_status_id = st.reimb_status_id
-   join ers_users rs
-   on re.resolver_id = rs.ers_user_id
-   join ers_reimbursement_types ty
-   on re.reimb_type_id = ty.reimb_type_id
+    left join ers_users rs
+    on re.resolver_id = rs.ers_user_id
+    left join ers_reimbursement_types ty
+    on re.reimb_type_id = ty.reimb_type_id
     `;
    
 
@@ -96,15 +96,15 @@ export class ReimbRepository implements CrudRepository<Reimb> {
 
     async save(newReimb: Reimb): Promise<Reimb> {
         let client: PoolClient;
-
+        console.log("i m in reimb repo save")
         try {
             client = await connectionPool.connect();
 
             // WIP: hacky fix since we need to make two DB calls
-            let authorId = (await client.query('select ERS_USER_ID from ERS_USERS where USERNAME = $1', [newReimb.AUTHOR])).rows[0].ers_user_id;
+            let authorId = (await client.query('select ERS_USER_ID from ERS_USERS where USERNAME = $1', [newReimb.AUTHOR_USERNAME])).rows[0].ers_user_id;
             let statusId = (await client.query('select REIMB_STATUS_ID from ERS_REIMBURSEMENT_STATUSES where REIMB_STATUS = $1', [newReimb.REIMB_STATUS])).rows[0].reimb_status_id;
-            let resolverId = (await client.query('select ERS_USER_ID from ERS_USERS where USERNAME = $1', [newReimb.RESOLVER])).rows[0].ers_user_id;
-            let typeId = (await client.query('select REIMB_TYPE_ID from ERS_REIMBURSMENT_TYPES where REIMB_TYPE = $1', [newReimb.REIMB_TYPE])).rows[0].reimb_type_id;
+            let resolverId = (await client.query('select ERS_USER_ID from ERS_USERS where USERNAME = $1', [newReimb.RESOLVER_USERNAME])).rows[0].ers_user_id;
+            let typeId = (await client.query('select REIMB_TYPE_ID from ERS_REIMBURSEMENT_TYPES where REIMB_TYPE = $1', [newReimb.REIMB_TYPE])).rows[0].reimb_type_id;
 
             let sql = `
                 insert into ERS_REIMBURSEMENT (amount,submitted,resolved,description,receipt,author_id,resolver_id,reimb_status_id,reimb_type_id) 
@@ -135,9 +135,9 @@ export class ReimbRepository implements CrudRepository<Reimb> {
             client = await connectionPool.connect();
 
             // WIP: hacky fix since we need to make two DB calls
-            let authorId = (await client.query('select ERS_USER_ID from ERS_USERS where USERNAME = $1', [updatedReimb.AUTHOR])).rows[0].ers_user_id;
+            let authorId = (await client.query('select ERS_USER_ID from ERS_USERS where USERNAME = $1', [updatedReimb.AUTHOR_USERNAME])).rows[0].ers_user_id;
             let statusId = (await client.query('select REIMB_STATUS_ID from ERS_REIMBURSEMENT_STATUSES where REIMB_STATUS = $1', [updatedReimb.REIMB_STATUS])).rows[0].reimb_status_id;
-            let resolverId = (await client.query('select ERS_USER_ID from ERS_USERS where USERNAME = $1', [updatedReimb.RESOLVER])).rows[0].ers_user_id;
+            let resolverId = (await client.query('select ERS_USER_ID from ERS_USERS where USERNAME = $1', [updatedReimb.RESOLVER_USERNAME])).rows[0].ers_user_id;
             let typeId = (await client.query('select REIMB_TYPE_ID from ERS_REIMBURSMENT_TYPES where REIMB_TYPE = $1', [updatedReimb.REIMB_TYPE])).rows[0].reimb_type_id;
             
             let sql = `update ERS_REIMBURSEMENT 

@@ -37,6 +37,6 @@ app.use(session_middleware_1.sessionMiddleware);
 app.use(cors_filter_1.corsFilter);
 app.use('/', express_1.default.json());
 app.use('/users', user_router_1.UserRouter);
-app.use('/reimb', reimb_router_1.ReimbRouter);
+app.use('/reimbs', reimb_router_1.ReimbRouter);
 app.use('/auth', auth_router_1.AuthRouter);
 app.listen(port, function () { return console.log("listening at http://localhost:" + port); });

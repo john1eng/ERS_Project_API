@@ -85,7 +85,12 @@ export class ReimbService {
     async addNewReimb(newReimb: Reimb): Promise<Reimb> {
         
         try {
-            if (!isValidObject(newReimb, 'REIMB_ID')) {
+            console.log('im in addnewReimb service')
+            console.log(newReimb)
+                        //I'm not sure y isValidObject is not working
+                        //IT DOESN'T WORK IF OBJECT HAS NULL VALUES
+            if (!isValidObject(newReimb, 'AMOUNT')) {
+                console.log('this is showing an invalid object')
                 throw new BadRequestError('Invalid property values found in provided reimb.');
             }
 

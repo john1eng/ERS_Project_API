@@ -132,7 +132,6 @@ export class UserRepository implements CrudRepository<User> {
 
         try {
             client = await connectionPool.connect();
-
             //get the role_id with role name then to update with the info
             let roleId = (await client.query('select ROLE_ID from ERS_USER_ROLES where ROLE_NAME = $1', [updatedUser.ROLE_NAME])).rows[0].role_id;
             console.log(roleId);

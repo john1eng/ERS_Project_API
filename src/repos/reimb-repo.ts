@@ -133,16 +133,20 @@ export class ReimbRepository implements CrudRepository<Reimb> {
 
         try {
             client = await connectionPool.connect();
-
+            console.log("im trying to connect")
             // WIP: hacky fix since we need to make two DB calls
             let authorId = (await client.query('select ERS_USER_ID from ERS_USERS where USERNAME = $1', [updatedReimb.AUTHOR_USERNAME])).rows[0].ers_user_id;
+            console.log('authorid')
             let statusId = (await client.query('select REIMB_STATUS_ID from ERS_REIMBURSEMENT_STATUSES where REIMB_STATUS = $1', [updatedReimb.REIMB_STATUS])).rows[0].reimb_status_id;
+            console.log('statusid')
             let resolverId = (await client.query('select ERS_USER_ID from ERS_USERS where USERNAME = $1', [updatedReimb.RESOLVER_USERNAME])).rows[0].ers_user_id;
-            let typeId = (await client.query('select REIMB_TYPE_ID from ERS_REIMBURSMENT_TYPES where REIMB_TYPE = $1', [updatedReimb.REIMB_TYPE])).rows[0].reimb_type_id;
-            
+            console.log('resolverid')
+            let typeId = (await client.query('select REIMB_TYPE_ID from ERS_REIMBURSEMENT_TYPES where REIMB_TYPE = $1', [updatedReimb.REIMB_TYPE])).rows[0].reimb_type_id;
+            console.log('typeId')
+            console.log("im after all the hacky fix");
             let sql = `update ERS_REIMBURSEMENT 
-                    set AMOUNT = '${updatedReimb.AMOUNT}', SUBMITTED = '${updatedReimb.SUBMITTED}', RESOLVED = '${updatedReimb.RESOLVED}', DESCRIPTION = '${updatedReimb.DESCRIPTION}', RECEIPT = '${updatedReimb.RECEIPT}', AUTHOR_ID = '${authorId}', RESOLVER_ID = '${resolverId}', STATUS_ID = '${statusId}', STATUS_TYPE_ID = '${statusId}'
-                    where REIM_ID =$1`;
+                    set AMOUNT = '${updatedReimb.AMOUNT}', SUBMITTED = '${updatedReimb.SUBMITTED}', RESOLVED = '${updatedReimb.RESOLVED}', DESCRIPTION = '${updatedReimb.DESCRIPTION}', RECEIPT = '${updatedReimb.RECEIPT}', AUTHOR_ID = '${authorId}', RESOLVER_ID = '${resolverId}', REIMB_STATUS_ID = '${statusId}', REIMB_TYPE_ID = '${typeId}'
+                    where REIMB_ID = $1`;
             console.log(sql)
             let rs = await client.query(sql, [updatedReimb.REIMB_ID]);
             return true;

@@ -122,7 +122,7 @@ export class ReimbService {
     }
 
     async deleteById(id: number): Promise<boolean> {
-        
+        console.log(id)
         try {
             if (!isValidId(id)) {
                 throw new BadRequestError();

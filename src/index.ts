@@ -31,7 +31,7 @@ const logStream = fs.createWriteStream(path.join(__dirname, 'logs/access.log'), 
 
 //webserver configuration
 const app = express();
-const port = 3000;
+const port = 8080;
 
 app.use(morgan('combined', { stream: logStream }));
 app.use(sessionMiddleware);

@@ -9,6 +9,10 @@ var fs_1 = __importDefault(require("fs"));
 var morgan_1 = __importDefault(require("morgan"));
 var path_1 = __importDefault(require("path"));
 var user_router_1 = require("./routers/user-router");
+var reimb_router_1 = require("./routers/reimb-router");
+var auth_router_1 = require("./routers/auth-router");
+var session_middleware_1 = require("./middleware/session-middleware");
+var cors_filter_1 = require("./middleware/cors-filter");
 var pg_1 = require("pg");
 //environment configuration
 dotenv_1.default.config();
@@ -29,20 +33,10 @@ var logStream = fs_1.default.createWriteStream(path_1.default.join(__dirname, 'l
 var app = express_1.default();
 var port = 3000;
 app.use(morgan_1.default('combined', { stream: logStream }));
+app.use(session_middleware_1.sessionMiddleware);
+app.use(cors_filter_1.corsFilter);
 app.use('/', express_1.default.json());
 app.use('/users', user_router_1.UserRouter);
-// let client: PoolClient;
-// try{
-// client = await connectionPool.connect();
-// console.log("----------------------");
-// console.log(client);
-// let sql = `select * from ers_reimbursement;`;
-// let payload = client.query(sql);
-// resp.status(200).json(payload);
-// }catch(e){
-//     console.log(e);
-// }finally {
-//     client && client.release();
-// }
-// });
+app.use('/reimb', reimb_router_1.ReimbRouter);
+app.use('/auth', auth_router_1.AuthRouter);
 app.listen(port, function () { return console.log("listening at http://localhost:" + port); });

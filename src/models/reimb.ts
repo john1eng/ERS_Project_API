@@ -3,20 +3,24 @@ export class Reimb{
     AMOUNT: number;
     SUBMITTED:Date;
     RESOLVED: Date;
-    AUTHOR_ID: number;
-    RESOLVER_ID: number;
-    REIMB_STATUS_ID: number;
-    REIMB_TYPE_ID: number;
+    DESCRIPTION: string;
+    RECEIPT: string;
+    AUTHOR: string;
+    RESOLVER: string;
+    REIMB_STATUS: string;
+    REIMB_TYPE: string;
 
-    constructor(id: number, amt: number, sm: Date, rs: Date, auID: number, rsID: number, rmSID: number, rmTID:number){
+    constructor(id: number, amt: number, sm: Date, rs: Date, des: string, receipt: string, author: string, resolver: string, status: string, type: string){
         this.REIMB_ID = id;
         this.AMOUNT= amt;
         this.SUBMITTED = sm;
         this.RESOLVED = rs;
-        this.AUTHOR_ID = auID;
-        this.RESOLVER_ID = rsID;
-        this.REIMB_STATUS_ID = rmSID;
-        this.REIMB_TYPE_ID = rmTID;
+        this.DESCRIPTION = des;
+        this.RECEIPT = receipt;
+        this.AUTHOR = author;
+        this.RESOLVER = resolver;
+        this.REIMB_STATUS = status;
+        this.REIMB_TYPE = type;
     }
 
 }

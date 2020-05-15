@@ -3,7 +3,11 @@ import express from 'express';
 import fs from 'fs';
 import morgan from 'morgan';
 import path from 'path';
-import { UserRouter } from './routers/user-router'
+import { UserRouter } from './routers/user-router';
+import { ReimbRouter } from './routers/reimb-router';
+import { AuthRouter } from './routers/auth-router';
+import { sessionMiddleware } from './middleware/session-middleware';
+import { corsFilter } from './middleware/cors-filter';
 
 import { Pool } from 'pg';
 
@@ -30,23 +34,11 @@ const app = express();
 const port = 3000;
 
 app.use(morgan('combined', { stream: logStream }));
+app.use(sessionMiddleware);
+app.use(corsFilter);
 app.use('/', express.json());
 app.use('/users', UserRouter);
-// let client: PoolClient;
-
-// try{
-// client = await connectionPool.connect();
-// console.log("----------------------");
-// console.log(client);
-// let sql = `select * from ers_reimbursement;`;
-// let payload = client.query(sql);
-// resp.status(200).json(payload);
-// }catch(e){
-//     console.log(e);
-// }finally {
-//     client && client.release();
-// }
-
-// });
+app.use('/reimbs', ReimbRouter);
+app.use('/auth', AuthRouter)
 
 app.listen(port, () => console.log(`listening at http://localhost:${port}`))

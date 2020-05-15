@@ -3,13 +3,14 @@ import express from 'express';
 import AppConfig from '../config/app';
 import { isEmptyObject } from '../utils/validator';
 import { ParsedUrlQuery } from 'querystring';
+import { adminGuard } from '../middleware/auth-middleware';
 
 export const UserRouter = express.Router();
 
 const userService = AppConfig.userService;
 
-UserRouter.get('', async (req, resp) =>{
-
+UserRouter.get('', adminGuard, async (req, resp) =>{
+    console.log('im in get method for user')
     try{
         let reqURL = url.parse(req.url, true);
         //what is ParsedURLQUERY for
@@ -17,6 +18,7 @@ UserRouter.get('', async (req, resp) =>{
             let payload = await userService.getUserByUniqueKey({...reqURL.query});
             resp.status(200).json(payload);
         }else{
+            console.log("Im about to invoke userService.getAllUsers()")
             let payload = await userService.getAllUsers();
             resp.status(200).json(payload);
         }

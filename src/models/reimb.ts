@@ -1,3 +1,7 @@
+/**
+ * model of the object Reimb to retrieve from the database
+ */
+
 export class Reimb{
     REIMB_ID: number;
     AMOUNT: number;

@@ -1,3 +1,8 @@
+
+/**
+ * this repository inplement the CRUD for ers_users table by calling, updating, deleting, saving info from the database.
+ * implement by dirrectly calling the database
+ */
 import { User } from '../models/user';
 import { CrudRepository } from './crud-repo';
 import {
@@ -63,12 +68,12 @@ export class UserRepository implements CrudRepository<User> {
     }
 
     async getUserByUniqueKey(key: string, val: string): Promise<User> {
-
+        console.log(`got to getUserByUniqueKey repo key: ${key} val: ${val}`);
         let client: PoolClient;
 
         try {
             client = await connectionPool.connect();
-            let sql = `${this.baseQuery} where au.${key} = $1`;
+            let sql = `${this.baseQuery} where ${key} = $1`;
             let rs = await client.query(sql, [val]);
             return mapUserResultSet(rs.rows[0]);
         } catch (e) {

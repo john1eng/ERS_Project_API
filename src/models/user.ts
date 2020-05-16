@@ -1,3 +1,7 @@
+/** 
+ * model of user object to receive from the database
+ */
+
 export class User{
     ERS_USER_ID: number;
     USERNAME: string;

@@ -1,3 +1,8 @@
+/**
+ * to validate the /users parameter and body from the routers and also to validate the info retreiving back
+ * from the repositories
+ */
+
 import { User } from "../models/user";
 import { UserRepository } from "../repos/user-repo";
 import { isValidId, isValidStrings, isValidObject, isPropertyOf, isEmptyObject } from "../utils/validator";
@@ -47,17 +52,17 @@ export class UserService {
 
         // we need to wrap this up in a try/catch in case errors are thrown for our awaits
         try {
-
+            console.log('I am in getUserByUniqueKey() service');
             let queryKeys = Object.keys(queryObj);
 
-            if(!queryKeys.every(key => isPropertyOf(key, User))) {
+            if(!queryKeys.every(key => isPropertyOf(key.toUpperCase(), User))) {
                 throw new BadRequestError();
             }
 
             // we will only support single param searches (for now)
             let key = queryKeys[0];
             let val = queryObj[key];
-
+            console.log('Did it get here\n', val);
             // if they are searching for a user by id, reuse the logic we already have
             if (key === 'ERS_USER_ID') {
                 return await this.getUserById(+val);
@@ -69,7 +74,7 @@ export class UserService {
             }
 
             let user = await this.userRepo.getUserByUniqueKey(key, val);
-
+            
             if (isEmptyObject(user)) {
                 throw new ResourceNotFoundError();
             }

@@ -1,3 +1,7 @@
+/**
+ * interface for the CRUD Repository
+ */
+
 export interface CrudRepository<T> {
     getAll(): Promise<T[]>;
     getById(id: number): Promise<T>;

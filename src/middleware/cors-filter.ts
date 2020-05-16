@@ -1,3 +1,8 @@
+/**
+ * to enable cross-domain request between the client and the server
+ * it allows restricted resources on a web page to be requested from another domain outside the domain
+ * cross-domain is to allow two domain of different security to allow communication
+ */
 import { Request, Response } from "express";
 
 

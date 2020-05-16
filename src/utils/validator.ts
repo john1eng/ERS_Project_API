@@ -1,3 +1,7 @@
+/**
+ * to valid datas and objects given to the parameter that is use mostly in service 
+ */
+
 export const isValidId = (id: number): boolean => {
     return !!(id && typeof id === 'number' && Number.isInteger(id) && id > 0);
 };

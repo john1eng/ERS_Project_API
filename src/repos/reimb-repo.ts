@@ -1,3 +1,7 @@
+/**
+ * this repository inplement the CRUD for ers_reimbursement table by calling, updating, deleting, saving info from the database.
+ * implement by dirrectly calling the database
+ */
 import { Reimb } from '../models/reimb';
 import { CrudRepository } from './crud-repo';
 import {

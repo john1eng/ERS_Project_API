@@ -1,3 +1,11 @@
+/**
+ * initial stages
+ * dotenv config to connect to the database
+ * use logging
+ * connecting the routers
+ * create a listenning port when the application is run
+ * connect to the middlewares - session, corsfilter
+ */
 import dotenv from 'dotenv';
 import express from 'express';
 import fs from 'fs';

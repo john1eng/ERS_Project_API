@@ -1,3 +1,7 @@
+/**use for transfering data from authenticaluser() to principal
+ * dto use for map out the data before transfering it to the client
+ */
+
 export class Principal {
 
     id: number;

@@ -1,3 +1,6 @@
+/**
+ * this middleware provide a guard to unauthorize client to make use of the endpoints
+ */
 import { Request, Response } from "express";
 import { AuthenticationError, AuthorizationError } from "../errors/errors";
 

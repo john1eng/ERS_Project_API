@@ -1,3 +1,8 @@
+/**
+ * to map out the result set the model
+ */
+
+
 import { UserSchema } from './schemas';
 import { User } from "../models/user";
 import { ReimbSchema } from './schemas';

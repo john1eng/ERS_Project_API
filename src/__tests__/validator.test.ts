@@ -1,3 +1,8 @@
+/**
+ * testing validators that serve mostly service
+ */
+
+
 import { isValidId, isValidStrings, isValidObject, isPropertyOf } from "../utils/validator";
 import { User } from "../models/user";
 

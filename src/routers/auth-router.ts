@@ -1,3 +1,7 @@
+/**
+ * connect to the endpoint to authorize the user before he/she allows to access to other endpoints that
+ * is guarded by the middleware
+ */
 import express from 'express';
 import AppConfig from '../config/app';
 import { Principal } from '../dtos/principal';

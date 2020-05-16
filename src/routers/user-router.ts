@@ -1,3 +1,6 @@
+/**
+ * connect to the /users endpoint to imprlement CRUD functionalities
+ */
 import url from 'url';
 import express from 'express';
 import AppConfig from '../config/app';
@@ -13,6 +16,7 @@ UserRouter.get('', adminGuard, async (req, resp) =>{
     console.log('im in get method for user')
     try{
         let reqURL = url.parse(req.url, true);
+        console.log('with parameter\n', reqURL.query);
         //what is ParsedURLQUERY for
         if(!isEmptyObject<ParsedUrlQuery>(reqURL.query)){
             let payload = await userService.getUserByUniqueKey({...reqURL.query});

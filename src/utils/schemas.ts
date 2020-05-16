@@ -1,3 +1,6 @@
+/** 
+ * interface for the data from the database to mapout the result set
+ */
 export interface UserSchema {
     ers_user_id: number,
     username: string,

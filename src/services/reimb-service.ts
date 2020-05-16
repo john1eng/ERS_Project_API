@@ -1,3 +1,7 @@
+/**
+ * to validate the /reimbs parameter and body from the routers and also to validate the info retreiving back
+ * from the repositories
+ */
 import { Reimb } from "../models/reimb";
 import { ReimbRepository } from "../repos/reimb-repo";
 import { isValidId, isValidStrings, isValidObject, isPropertyOf, isEmptyObject } from "../utils/validator";

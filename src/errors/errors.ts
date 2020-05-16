@@ -1,3 +1,7 @@
+/**
+ * privote the errors message and status code for the communcation that response to the client
+ */
+
 class ApplicationError {
 
     statusCode: number;

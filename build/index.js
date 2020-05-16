@@ -3,6 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * initial stages
+ * dotenv config to connect to the database
+ * use logging
+ * connecting the routers
+ * create a listenning port when the application is run
+ * connect to the middlewares - session, corsfilter
+ */
 var dotenv_1 = __importDefault(require("dotenv"));
 var express_1 = __importDefault(require("express"));
 var fs_1 = __importDefault(require("fs"));
@@ -31,7 +39,7 @@ fs_1.default.mkdir(__dirname + "/logs", function () { });
 var logStream = fs_1.default.createWriteStream(path_1.default.join(__dirname, 'logs/access.log'), { flags: 'a' });
 //webserver configuration
 var app = express_1.default();
-var port = 3000;
+var port = 8080;
 app.use(morgan_1.default('combined', { stream: logStream }));
 app.use(session_middleware_1.sessionMiddleware);
 app.use(cors_filter_1.corsFilter);

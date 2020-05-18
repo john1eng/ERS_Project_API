@@ -16,7 +16,7 @@ UserRouter.get('', async (req, resp) =>{
     console.log('im in get method for user')
     try{
         let reqURL = url.parse(req.url, true);
-        console.log('with parameter\n', reqURL.query);
+        console.log('with parameter\n', {...reqURL.query});
         //what is ParsedURLQUERY for
         if(!isEmptyObject<ParsedUrlQuery>(reqURL.query)){
             let payload = await userService.getUserByUniqueKey({...reqURL.query});
@@ -68,9 +68,11 @@ UserRouter.patch('', async (req, resp) => {
 UserRouter.delete('', async (req, resp) => {
     console.log("Im in the router.")
 
-	console.log('DELETE REQUEST RECEIVED AT /users');
+    console.log('DELETE REQUEST RECEIVED AT /users');
+    let reqURL = url.parse(req.url, true);
+    console.log('with parameter\n', {...reqURL.query}.ERS_USER_ID);
 	try {
-		let delUser = await userService.deleteById(req.body.ERS_USER_ID);
+		let delUser = await userService.deleteById(+{...reqURL.query}.ERS_USER_ID);
 		return resp.status(204).json(delUser);
 	} catch (e) {
 		return resp.status(e.statusCode).json(e);

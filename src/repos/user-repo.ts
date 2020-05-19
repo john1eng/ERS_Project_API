@@ -164,6 +164,7 @@ export class UserRepository implements CrudRepository<User> {
             let rs = await client.query(sql, [id]);
             return true;
         } catch (e) {
+            console.log(e);
             throw new InternalServerError();
         } finally {
             client && client.release();

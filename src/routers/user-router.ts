@@ -12,7 +12,7 @@ export const UserRouter = express.Router();
 
 const userService = AppConfig.userService;
 
-UserRouter.get('', async (req, resp) =>{
+UserRouter.get('', adminGuard, async (req, resp) =>{
     console.log('im in get method for user')
     try{
         let reqURL = url.parse(req.url, true);

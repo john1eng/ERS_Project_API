@@ -30,6 +30,17 @@ ReimbRouter.get('', employGuard, async (req, resp) =>{
     }
 });
 
+ReimbRouter.get('/:username', async (req, resp) => {
+    console.log('im in router of getReimbByUserName')
+    const username = req.params.username;
+    try {
+        let payload = await reimbService.getReimbByUserName(username);
+        return resp.status(200).json(payload);
+    } catch (e) {
+        return resp.status(e.statusCode).json(e);
+    }
+});
+
 ReimbRouter.get('/:id', async (req, resp) => {
     const id = +req.params.id;
     try {

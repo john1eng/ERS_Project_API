@@ -44,28 +44,45 @@ export class ReimbService {
         }
 
         return reimb;
-
     }
 
-    async getReimbByUniqueKey(queryObj: any): Promise<Reimb> {
+    async getReimbByUserName(username: string): Promise<Reimb[]> {
+
+        console.log('im in service of getReimbByUserName', username)
+        if(!isValidStrings(username)) {
+            throw new BadRequestError();
+        }
+        console.log('im after the validstring check', username)
+        let reimb = await this.reimbRepo.getByUserName(username);
+        
+        if (isEmptyObject(reimb)) {
+            throw new ResourceNotFoundError();
+        }
+
+        return reimb;
+    }
+
+
+
+    async getReimbByUniqueKey(queryObj: any): Promise<Reimb[]> {
 
         // we need to wrap this up in a try/catch in case errors are thrown for our awaits
         try {
-
+            console.log('i\'m in getReimbByUniqueKey', queryObj)
             let queryKeys = Object.keys(queryObj);
 
-            if(!queryKeys.every(key => isPropertyOf(key, Reimb))) {
-                throw new BadRequestError();
-            }
+            // if(!queryKeys.every(key => isPropertyOf(key, Reimb))) {
+            //     throw new BadRequestError();
+            // }
 
             // we will only support single param searches (for now)
             let key = queryKeys[0];
             let val = queryObj[key];
 
             // if they are searching for a reimb by id, reuse the logic we already have
-            if (key === 'REIMB_ID') {
-                return await this.getReimbById(+val);
-            }
+            // if (key === 'REIMB_ID') {
+            //     return await this.getReimbById(+val);
+            // }
 
             // ensure that the provided key value is valid
             if(!isValidStrings(val)) {
@@ -135,7 +152,6 @@ export class ReimbService {
         } catch (e) {
             throw e;
         }
-
     }
 }
 

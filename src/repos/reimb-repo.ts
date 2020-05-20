@@ -76,20 +76,37 @@ export class ReimbRepository implements CrudRepository<Reimb> {
         } finally {
             client && client.release();
         }
-    
 
     }
 
-    async getReimbByUniqueKey(key: string, val: string): Promise<Reimb> {
+    async getByUserName(username: string): Promise<Reimb[]> {
+        console.log('im in router of getReimbByUserName')
+        let client: PoolClient;
 
+        try {
+            client = await connectionPool.connect();
+            let sql = `${this.baseQuery} where us.USERNAME = $1`;
+            let rs = await client.query(sql, [username]);
+            return rs.rows.map(mapReimbResultSet);
+        } catch (e) {
+            console.log(e)
+            throw new InternalServerError();
+        } finally {
+            client && client.release();
+        }
+    }
+
+    async getReimbByUniqueKey(key: string, val: string): Promise<Reimb[]> {
+        console.log('I\'m in getReimbByUniqueKey repo', key, val)
         let client: PoolClient;
 
         try {
             client = await connectionPool.connect();
             let sql = `${this.baseQuery} where re.${key} = $1`;
             let rs = await client.query(sql, [val]);
-            return mapReimbResultSet(rs.rows[0]);
+            return rs.rows.map(mapReimbResultSet);
         } catch (e) {
+            console.log(e)
             throw new InternalServerError();
         } finally {
             client && client.release();

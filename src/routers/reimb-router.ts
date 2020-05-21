@@ -6,13 +6,13 @@ import express from 'express';
 import AppConfig from '../config/app';
 import { isEmptyObject } from '../utils/validator';
 import { ParsedUrlQuery } from 'querystring';
-import { employGuard } from '../middleware/auth-middleware';
+import { financeGuard } from '../middleware/auth-middleware';
 
 export const ReimbRouter = express.Router();
 
 const reimbService = AppConfig.reimbService;
 
-ReimbRouter.get('', employGuard, async (req, resp) =>{
+ReimbRouter.get('', financeGuard, async (req, resp) =>{
     console.log('im in get method for reimb')
     try{
         let reqURL = url.parse(req.url, true);

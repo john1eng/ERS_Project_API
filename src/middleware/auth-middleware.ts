@@ -30,11 +30,12 @@ export const employGuard = (req: Request, resp: Response, next) => {
 
 }
 
-export const FinanceGuard = (req: Request, resp: Response, next) => {
+export const financeGuard = (req: Request, resp: Response, next) => {
     console.log("im in auth-middleware")
+    console.log(req.session.principal.role);
     if (!req.session.principal) {
         resp.status(401).json(new AuthenticationError('No session found! Please login.'));
-    } else if (req.session.principal.role === 'Finance Manager') {
+    } else if (req.session.principal.role === 'FINANCE MANAGER') {
         next();
     } else {
         console.log(req.session.principal.role)

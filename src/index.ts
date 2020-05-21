@@ -18,6 +18,7 @@ import { sessionMiddleware } from './middleware/session-middleware';
 import { corsFilter } from './middleware/cors-filter';
 
 import { Pool } from 'pg';
+import { EmplReimbRouter } from './routers/emplReimb-router';
 
 //environment configuration
 dotenv.config();
@@ -47,6 +48,7 @@ app.use(corsFilter);
 app.use('/', express.json());
 app.use('/users', UserRouter);
 app.use('/reimbs', ReimbRouter);
-app.use('/auth', AuthRouter)
+app.use('/auth', AuthRouter);
+app.use('/emplReimbs', EmplReimbRouter);
 
 app.listen(port, () => console.log(`listening at http://localhost:${port}`))

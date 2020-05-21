@@ -22,6 +22,7 @@ var auth_router_1 = require("./routers/auth-router");
 var session_middleware_1 = require("./middleware/session-middleware");
 var cors_filter_1 = require("./middleware/cors-filter");
 var pg_1 = require("pg");
+var emplReimb_router_1 = require("./routers/emplReimb-router");
 //environment configuration
 dotenv_1.default.config();
 //database configuration
@@ -47,4 +48,5 @@ app.use('/', express_1.default.json());
 app.use('/users', user_router_1.UserRouter);
 app.use('/reimbs', reimb_router_1.ReimbRouter);
 app.use('/auth', auth_router_1.AuthRouter);
+app.use('/emplReimbs', emplReimb_router_1.EmplReimbRouter);
 app.listen(port, function () { return console.log("listening at http://localhost:" + port); });

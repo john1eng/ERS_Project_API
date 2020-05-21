@@ -2,7 +2,7 @@
  * to validate the /emplReimbs parameter and body from the routers and also to validate the info retreiving back
  * from the repositories
  */
-import { Reimb } from "../models/Reimb";
+import { Reimb } from "../models/reimb";
 import { EmplReimbRepository } from "../repos/emplReimb-repo";
 import { isValidId, isValidStrings, isValidObject, isPropertyOf, isEmptyObject } from "../utils/validator";
 import { 

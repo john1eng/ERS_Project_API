@@ -48,5 +48,5 @@ app.use('/', express_1.default.json());
 app.use('/users', user_router_1.UserRouter);
 app.use('/reimbs', reimb_router_1.ReimbRouter);
 app.use('/auth', auth_router_1.AuthRouter);
-app.use('/emplReimbs', emplReimb_router_1.EmplReimbRouter);
+app.use('/emreimbs', emplReimb_router_1.EmplReimbRouter);
 app.listen(port, function () { return console.log("listening at http://localhost:" + port); });

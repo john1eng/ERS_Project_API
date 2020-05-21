@@ -49,6 +49,6 @@ app.use('/', express.json());
 app.use('/users', UserRouter);
 app.use('/reimbs', ReimbRouter);
 app.use('/auth', AuthRouter);
-app.use('/emplReimbs', EmplReimbRouter);
+app.use('/emreimbs', EmplReimbRouter);
 
 app.listen(port, () => console.log(`listening at http://localhost:${port}`))

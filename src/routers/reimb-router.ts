@@ -65,7 +65,7 @@ ReimbRouter.post('', async (req, resp) => {
 
 ReimbRouter.patch('', async (req, resp) => {
 
-	console.log('PATCH REQUEST RECEIVED AT /reimbs');
+	console.log('bPATCH REQUEST RECEIVED AT /reimbs');
 	try {
 		let updreimb = await reimbService.updateReimb(req.body);
 		return resp.status(200).json(updreimb);

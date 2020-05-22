@@ -65,7 +65,7 @@ EmplReimbRouter.post('', async (req, resp) => {
 
 EmplReimbRouter.patch('', async (req, resp) => {
 
-	console.log('PATCH REQUEST RECEIVED AT /emplReimbs');
+	console.log('aPATCH REQUEST RECEIVED AT /emplReimbs');
 	try {
 		let updemplReimb = await emplReimbService.updateEmplReimb(req.body);
 		return resp.status(200).json(updemplReimb);
@@ -78,9 +78,11 @@ EmplReimbRouter.patch('', async (req, resp) => {
 EmplReimbRouter.delete('', async (req, resp) => {
     console.log("Im in the router.")
 
-	console.log('DELETE REQUEST RECEIVED AT /emplReimbs');
+    console.log('DELETE REQUEST RECEIVED AT /emplReimbs');
+    let reqURL = url.parse(req.url, true);
+    console.log('with parameter\n', {...reqURL.query}.REIMB_ID);
 	try {
-		let delemplReimb = await emplReimbService.deleteById(req.body.REIMB_ID);
+		let delemplReimb = await emplReimbService.deleteById(+{...reqURL.query}.REIMB_ID);
 		return resp.status(204).json(delemplReimb);
 	} catch (e) {
 		return resp.status(e.statusCode).json(e);
